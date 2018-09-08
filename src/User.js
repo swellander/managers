@@ -1,5 +1,5 @@
 import React from 'react';
 
-export default ({ user }) => (
-  <h3>{user.name}</h3>
-)
+export default ({ user }) => {
+  return <h3>{user.name}</h3>
+}

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { Route, Link } from 'react-router-dom';
 import Users from './Users';
+import User from './User';
 
 export default class Main extends Component {
   state = {
@@ -28,6 +29,7 @@ export default class Main extends Component {
         <Link to="/users"><h3>Users({Object.keys(this.state.users).length})</h3></Link> 
         <hr/>
         <Route path='/users' render={() => <Users users={this.state.users} /> } />
+        <Route path='/users/:id' render={({ match }) => <User user={this.state.users[match.params.id]} />} />
       </div>
     )
   }

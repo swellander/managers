@@ -1,10 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default ({ user, deleteUser }) => {
+export default ({ user }) => {
   return (
     <div>
-      <h3>{ user.name }</h3>
-      <button>Delete</button>
+      <Link key={user.id} to={`/users/${user.id}`}>
+        <h3>{user.name}</h3>
+      </Link>
     </div> 
   )
 }

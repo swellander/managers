@@ -1,7 +1,16 @@
 console.log('Still Connected Baby!@')
-import React, { Component } from 'react';
+import React from 'react';
 import { render } from 'react-dom';
-import App from './App';
+import Main from './Main';
+import { HashRouter as Router } from 'react-router-dom';
+
+const App = () => {
+  return (
+    <Router>
+      <Main /> 
+    </Router>
+  )
+}
 
 render(<App/>, document.getElementById('app'));
 

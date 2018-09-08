@@ -4,11 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "nodemon node_modules/mocha/bin/mocha"
+    "test": "nodemon node_modules/mocha/bin/mocha",
+    "server": "nodemon server.js",
+    "build": "webpack",
+    "start:dev": "yarn build -- -w --mode development & yarn server"
+
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.2.0"
+    "mocha": "^5.2.0",
+    "webpack": "^4.17.2",
+    "webpack-cli": "^3.1.0"
   },
   "dependencies": {
     "pg": "^7.4.3",

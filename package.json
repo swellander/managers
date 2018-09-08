@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "nodemon node_modules/mocha/bin/mocha",
-    "server": "nodemon server.js",
+    "server": "nodemon server",
     "build": "webpack",
     "start:dev": "yarn build -- -w --mode development & yarn server"
   },

@@ -4,7 +4,7 @@ const port = process.env.PORT || 3000;
 const db = require('./db');
 const path = require('path');
 
-server.use(express.static(path.join(__dirname, 'public')))
+server.use(express.static(path.join(__dirname, '../client/public')))
 server.use('/api', require('./router'))
 
 db.syncSeed()

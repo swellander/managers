@@ -8,8 +8,6 @@ const homePage = fs.readFileSync('./public/index.html', 'utf8');
 const bundle = fs.readFileSync('./dist/bundle.js');
 
 const requestHandler = (req, res) => {
-  console.log(req.url);
-
   if (req.url == '/bundle.js') {
     res.end(bundle)
   } 
@@ -23,8 +21,12 @@ const requestHandler = (req, res) => {
 
 const server = http.createServer(requestHandler);
 
-server.listen(port, err => {
-  if (err) console.log('something went wrong', err);
-  else console.log('listening on port ', port);
-});
+const listen = () => {
+  server.listen(port, err => {
+    if (err) console.log('something went wrong', err);
+    else console.log('listening on port ', port);
+  });
+}
 
+db.syncSeed()
+  .then(() => listen())

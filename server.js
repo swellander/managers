@@ -8,6 +8,11 @@ const homePage = fs.readFileSync('./public/index.html', 'utf8');
 const bundle = fs.readFileSync('./dist/bundle.js');
 
 const requestHandler = (req, res) => {
+  console.log(req.method);
+  if (req.method == 'DELETE' && req.url == '/users') {
+    res.end('WOOO') 
+  }
+
   if (req.url == '/bundle.js') {
     res.end(bundle)
   } 

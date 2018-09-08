@@ -5,19 +5,27 @@ import Users from './Users';
 
 export default class Main extends Component {
   state = {
-    users: [] 
+    users: {} 
+  }
+
+  convertToUserObj = (userArr) => {
+    return userArr.reduce((acc, curr) => {
+      const {id, ...user} = curr;
+      acc[curr.id] = user;
+      return acc;
+    }, {})
   }
 
   componentDidMount() {
     axios.get('/api/users')
       .then(response => response.data)
-      .then(users => this.setState({ users }))
+      .then(users => this.setState({ users: this.convertToUserObj(users) }))
   }
 
   render() {
     return (
       <div>
-        <Link to="/users"><h3>Users({this.state.users.length})</h3></Link> 
+        <Link to="/users"><h3>Users({Object.keys(this.state.users).length})</h3></Link> 
         <hr/>
         <Route path='/users' render={() => <Users users={this.state.users} /> } />
       </div>

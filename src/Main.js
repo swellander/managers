@@ -23,13 +23,18 @@ export default class Main extends Component {
       .then(users => this.setState({ users: this.convertToUserObj(users) }))
   }
 
+  deleteUser = (id) => {
+    axios.delete(`/users/${id}`)
+    
+  }
+
   render() {
     return (
       <div>
         <Link to="/users"><h3>Users({Object.keys(this.state.users).length})</h3></Link> 
         <hr/>
         <Route path='/users' render={() => <Users users={this.state.users} /> } />
-        <Route path='/users/:id' render={({ match }) => <User user={this.state.users[match.params.id]} />} />
+        <Route path='/users/:id' render={({ match }) => <User deleteUser={this.deleteUser} user={this.state.users[match.params.id]} />} />
       </div>
     )
   }

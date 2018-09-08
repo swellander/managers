@@ -21,6 +21,7 @@ const syncSeed = async () => {
 }
 
 module.exports = {
+  conn,
   syncSeed,
   User
 };

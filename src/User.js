@@ -1,5 +1,10 @@
 import React from 'react';
 
-export default ({ user }) => {
-  return <h3>{user.name}</h3>
+export default ({ user, deleteUser }) => {
+  return (
+    <div>
+      <h3>{ user.name }</h3>
+      <button>Delete</button>
+    </div> 
+  )
 }

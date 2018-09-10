@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Route, Link } from 'react-router-dom';
+import Header from './Header';
 import Bannermen from './Bannermen';
-import Bannerman from './Bannerman';
 
 export default class Main extends Component {
   state = {
@@ -27,9 +27,14 @@ export default class Main extends Component {
   render() {
     return (
       <div>
-        <Link to="/bannermen"><h3>Bannermen({this.state.bannermen.length})</h3></Link>
-        <hr />
-        <Route path='/bannermen' render={() => <Bannermen remove={this.deleteUser} bannermen={this.state.bannermen} />} />
+        <Header bannermen={this.state.bannermen} />
+        <Route
+          path='/bannermen'
+          render={() =>
+            <Bannermen remove={this.deleteUser}
+              bannermen={this.state.bannermen}
+            />}
+        />
       </div>
     )
   }

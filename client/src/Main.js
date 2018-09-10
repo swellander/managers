@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Route, Link } from 'react-router-dom';
-import Users from './Users';
-import UserDetail from './UserDetail';
+import Bannermen from './Bannermen';
+import Bannerman from './Bannerman';
 
 export default class Main extends Component {
   state = {
-    users: [] 
+    users: []
   }
 
   componentDidMount() {
@@ -16,17 +16,20 @@ export default class Main extends Component {
   }
 
   deleteUser = (id) => {
-    axios.delete(`/users/${id}`)
-    
+    console.log('deleting bannerman of id: ', id);
+    axios.delete(`/api/users/${id}`)
+      .then(() => {
+        const newUsers = this.state.users.filter(user => user.id !== id);
+        this.setState({ users: newUsers })
+      })
   }
 
   render() {
     return (
       <div>
-        <Link to="/users"><h3>Users({Object.keys(this.state.users).length})</h3></Link> 
-        <hr/>
-        <Route path='/users' render={() => <Users users={this.state.users} /> } />
-        <Route path='/users/:id' render={({ match }) => <UserDetail id={match.params.id} />} />
+        <Link to="/users"><h3>Bannermen({this.state.users.length})</h3></Link>
+        <hr />
+        <Route path='/users' render={() => <Bannermen remove={this.deleteUser} users={this.state.users} />} />
       </div>
     )
   }

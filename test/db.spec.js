@@ -1,11 +1,11 @@
 const { expect } = require('chai');
-const db = require('../db');
+const db = require('../server/db');
 const { User } = db;
 
 describe('data layer', () => {
   beforeEach(async () => {
     await db.syncSeed();
-  });  
+  });
 
   it('has three users', () => {
     return User.findAll()
@@ -26,6 +26,6 @@ describe('data layer', () => {
         dwight.setManager(michael);
         expect(dwight.managerId).to.equal(michael.id)
       })
-  }); 
+  });
 
 })

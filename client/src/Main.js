@@ -6,30 +6,30 @@ import Bannerman from './Bannerman';
 
 export default class Main extends Component {
   state = {
-    users: []
+    bannermen: []
   }
 
   componentDidMount() {
-    axios.get('/api/users')
+    axios.get('/api/bannermen')
       .then(response => response.data)
-      .then(users => this.setState({ users }))
+      .then(bannermen => this.setState({ bannermen }))
   }
 
   deleteUser = (id) => {
     console.log('deleting bannerman of id: ', id);
-    axios.delete(`/api/users/${id}`)
+    axios.delete(`/api/bannermen/${id}`)
       .then(() => {
-        const newUsers = this.state.users.filter(user => user.id !== id);
-        this.setState({ users: newUsers })
+        const newBannermen = this.state.bannermen.filter(bannerman => bannerman.id !== id);
+        this.setState({ bannermen: newBannermen })
       })
   }
 
   render() {
     return (
       <div>
-        <Link to="/users"><h3>Bannermen({this.state.users.length})</h3></Link>
+        <Link to="/bannermen"><h3>Bannermen({this.state.bannermen.length})</h3></Link>
         <hr />
-        <Route path='/users' render={() => <Bannermen remove={this.deleteUser} users={this.state.users} />} />
+        <Route path='/bannermen' render={() => <Bannermen remove={this.deleteUser} bannermen={this.state.bannermen} />} />
       </div>
     )
   }

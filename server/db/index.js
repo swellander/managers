@@ -5,13 +5,13 @@ const conn = new Sequelize(
   { logging: false }
 );
 
-const User = conn.define('user', {
+const Bannerman = conn.define('bannerman', {
   name: Sequelize.STRING,
   house: Sequelize.STRING,
   imageLink: {
     type: Sequelize.STRING,
     get() {
-      return 'https://api.got.show' + this.getDataValue('imageLink')  
+      return 'https://api.got.show' + this.getDataValue('imageLink')
     }
   },
   titles: Sequelize.ARRAY(Sequelize.STRING)
@@ -19,19 +19,19 @@ const User = conn.define('user', {
 
 
 //relationships
-User.belongsTo(User, { as: 'manager' })
-User.hasMany(User, { as: 'employee' })
+Bannerman.belongsTo(Bannerman, { as: 'lord' })
 
 const syncSeed = async () => {
   await conn.sync({ force: true });
-  const users = ['Michael', 'Dwight', 'Pam'];
-  const [ robb, torrhen, tyrion ] = await Promise.all(seedData.map( character => {
-    return User.create(character)
+  const [robb, torrhen, tyrion] = await Promise.all(seedData.map(character => {
+    return Bannerman.create(character)
   }));
+
+  torrhen.setLord(robb);
 }
 
 module.exports = {
   conn,
   syncSeed,
-  User
+  Bannerman
 };

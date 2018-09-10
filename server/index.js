@@ -7,6 +7,11 @@ const path = require('path');
 server.use(express.static(path.join(__dirname, '../client/public')))
 server.use('/api', require('./router'))
 
-db.syncSeed()
-  .then(() => server.listen(port, () => console.log(`listening on port ${port}`)))
-  .catch(err => console.log(err))
+const init = () => {
+  db.syncSeed()
+    .then(() => server.listen(port, () => console.log(`listening on port ${port}`)))
+    .catch(err => console.log(err))
+}
+
+init();
+

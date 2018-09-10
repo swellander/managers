@@ -1,22 +1,22 @@
-const { User } = require('../db');
+const { Bannerman } = require('../db');
 const router = require('express').Router();
 
-router.get('/users', (req, res, next) => {
-  User.findAll()
-    .then(users => res.send(users))
+router.get('/bannermen', (req, res, next) => {
+  Bannerman.findAll()
+    .then(bannermen => res.send(bannermen))
     .catch(next);
 });
 
-router.get('/users/:id', (req, res) => {
-  User.findById(req.params.id)
-    .then(user => res.json(user))
+router.get('/bannermen/:id', (req, res) => {
+  Bannerman.findById(req.params.id)
+    .then(bannerman => res.json(bannerman))
     .catch(err => {
       res.status(500).send(err);
     });
 });
 
-router.delete('/users/:id', (req, res, next) => {
-  User.destroy({
+router.delete('/bannermen/:id', (req, res, next) => {
+  Bannerman.destroy({
     where: {
       id: req.params.id
     }

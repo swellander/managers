@@ -3,12 +3,24 @@ import axios from 'axios';
 import { Row } from 'react-materialize';
 import Bannerman from './Bannerman';
 
-export default ({ remove, users }) => {
+export default ({ remove, bannermen }) => {
+
+  const findLord = (_bannerman) => {
+    const lord = bannermen.filter(bannerman => bannerman.id === _bannerman.lordId)[0];
+    if (lord) return lord;
+    else return { name: 'none but the Seven' }
+  }
+
   return (
     <Row>
-      { users.map(user => (
-        <Bannerman remove={remove} key={user.id} user={user} />
-      )) }
+      {bannermen.map(bannerman => (
+        <Bannerman
+          lord={findLord(bannerman)}
+          remove={remove}
+          key={bannerman.id}
+          bannerman={bannerman}
+        />
+      ))}
     </Row>
   )
 }

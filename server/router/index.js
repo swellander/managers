@@ -7,6 +7,12 @@ router.get('/bannermen', (req, res, next) => {
     .catch(next);
 });
 
+router.post('/bannermen', (req, res, next) => {
+  Bannerman.create(req.body)
+    .then(bannerman => res.json(bannerman))
+    .catch(next)
+})
+
 router.get('/bannermen/:id', (req, res) => {
   Bannerman.findById(req.params.id)
     .then(bannerman => res.json(bannerman))

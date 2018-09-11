@@ -5,6 +5,7 @@ const db = require('./db');
 const path = require('path');
 
 server.use(express.static(path.join(__dirname, '../client/public')))
+server.use(express.json());
 server.use('/api', require('./router'))
 
 const init = () => {

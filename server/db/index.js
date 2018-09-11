@@ -10,8 +10,11 @@ const Bannerman = conn.define('bannerman', {
   house: Sequelize.STRING,
   imageLink: {
     type: Sequelize.STRING,
+    defaultValue: null,
     get() {
-      return 'https://api.got.show' + this.getDataValue('imageLink')
+      const url = this.getDataValue('imageLink');
+      if (url) return 'https://api.got.show' + url;
+      else return 'https://i.ytimg.com/vi/F1QtStYNPXE/maxresdefault.jpg'
     }
   },
   titles: Sequelize.ARRAY(Sequelize.STRING)

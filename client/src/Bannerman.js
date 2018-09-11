@@ -9,7 +9,11 @@ export default class User extends Component {
     const reveal = (
       <div>
         <p>{house}</p>
-        <p><strong>Known as:</strong> {titles.length > 0 ? titles.map(title => <em key={uuid()}>{title}</em>) : 'A genuine dude'}</p>
+        <p><strong>Known as: </strong><br />
+          {titles.length > 0 ?
+            titles.map(title => <em key={uuid()}>{title}, </em>)
+            : 'A genuine dude'}
+        </p>
 
         <Button className='blue' waves='light'>Update</Button>
         <br></br>

@@ -1,17 +1,25 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { Button } from 'react-materialize';
+import { Button, Row } from 'react-materialize';
 
 export default ({ bannermen }) => {
+  const styles = {
+    display: 'inline',
+    float: 'right'
+  }
   return (
-    <div>
+    <Row>
       <h3>
         <Link to="/bannermen">
           Bannermen({bannermen.length})
-      </Link>
+        </Link>
       </h3>
-      <Button></Button>
+      <div style={styles}>
+        <Link to="/create">
+          <Button floating large className='red' waves='light' icon='add' />
+        </Link>
+      </div>
       <hr />
-    </div>
+    </Row>
   )
 }

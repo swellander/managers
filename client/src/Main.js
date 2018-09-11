@@ -17,11 +17,11 @@ export default class Main extends Component {
       .then(bannermen => this.setState({ bannermen }))
   }
 
-  addCharacter = (name) => {
+  addCharacter = (name, lordId) => {
     return axios.get(`https://api.got.show/api/characters/${name}`)
       .then(response => response.data.data)
       .then(character => {
-        axios.post(`/api/bannermen`, character)
+        axios.post(`/api/bannermen`, {...character, lordId})
           .then(response => response.data)
           .then(bannerman => {
             this.setState({
@@ -60,7 +60,10 @@ export default class Main extends Component {
         <Route
           path='/create'
           render={() => (
-            <Create addCharacter={this.addCharacter} />
+            <Create 
+              addCharacter={this.addCharacter} 
+              bannermen={this.state.bannermen}
+            />
           )}
         />
       </div>

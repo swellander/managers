@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
 import CreateUpdateForm from './CreateUpdateForm';
 import { Modal, Col, Row } from 'react-materialize';
-import axios from 'axios';
 
 export default class extends Component {
   state = {
-    name: ''
+    bannermanName: '',
+    lordId: ''
   }
 
   handleSubmit = e => {
     e.preventDefault();
-    const name = e.target.name.value;
-    this.props.addCharacter(name)
+    const { bannermanName, lordId } = this.state;
+    this.props.addCharacter(bannermanName, lordId)
       .catch(err => {
         console.log(err);
         $('#error-modal').modal('open')
@@ -20,14 +20,15 @@ export default class extends Component {
 
   handleChange = e => {
     this.setState({ [e.target.name]: e.target.value })
+
   }
 
   render() {
-    const { name } = this.state;
+    const { bannermanName, lordId } = this.state;
     return (
       <Row>
         <Col s={4} />
-        <Col s={3}>
+        <Col s={5}>
           <Modal
             id='error-modal'
             header='No such GOT character'>
@@ -36,7 +37,9 @@ export default class extends Component {
           <CreateUpdateForm
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
-            name={name}
+            bannermanName={bannermanName}
+            lordId={lordId}
+            bannermen={this.props.bannermen}
           />
         </Col>
       </Row>

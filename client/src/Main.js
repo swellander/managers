@@ -5,10 +5,11 @@ import Header from './Header';
 import Bannermen from './Bannermen';
 import Create from './Create';
 import Update from './Update';
+import store, { initBannerment } from './store';
 
 export default class Main extends Component {
   state = {
-    bannermen: [],
+    bannermen: store.getState(),
     redirect: false
   }
 

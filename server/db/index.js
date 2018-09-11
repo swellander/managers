@@ -7,7 +7,12 @@ const conn = new Sequelize(
 
 const Bannerman = conn.define('bannerman', {
   name: Sequelize.STRING,
-  house: Sequelize.STRING,
+  house: {
+    type: Sequelize.STRING,
+    get() {
+      return this.getDataValue('house').replace('House ', '');
+    }
+  },
   imageLink: {
     type: Sequelize.STRING,
     defaultValue: null,

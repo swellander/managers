@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Row } from 'react-materialize';
 import Bannerman from './Bannerman';
 
-export default ({ remove, bannermen }) => {
+export default ({ update, remove, bannermen }) => {
 
   const findLord = (_bannerman) => {
     const lord = bannermen.filter(bannerman => bannerman.id === _bannerman.lordId)[0];
@@ -17,6 +17,7 @@ export default ({ remove, bannermen }) => {
         <Bannerman
           lord={findLord(bannerman)}
           remove={remove}
+          update={update}
           key={bannerman.id}
           bannerman={bannerman}
         />

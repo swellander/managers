@@ -4,6 +4,7 @@ import { Route, Redirect } from 'react-router-dom';
 import Header from './Header';
 import Bannermen from './Bannermen';
 import Create from './Create';
+import Update from './Update';
 
 export default class Main extends Component {
   state = {
@@ -21,7 +22,7 @@ export default class Main extends Component {
     return axios.get(`https://api.got.show/api/characters/${name}`)
       .then(response => response.data.data)
       .then(character => {
-        axios.post(`/api/bannermen`, {...character, lordId})
+        axios.post(`/api/bannermen`, { ...character, lordId })
           .then(response => response.data)
           .then(bannerman => {
             this.setState({
@@ -33,6 +34,10 @@ export default class Main extends Component {
       })
   }
 
+  updateCharacter = (id, character) => {
+    alert('updating')
+  }
+
   deleteUser = (id) => {
     console.log('deleting bannerman of id: ', id);
     axios.delete(`/api/bannermen/${id}`)
@@ -42,27 +47,41 @@ export default class Main extends Component {
       })
   }
 
+
+
   render() {
     if (this.state.redirect) {
       this.setState({ redirect: false })
       return <Redirect push to='/bannermen' />;
     }
+
     return (
       <div>
         <Header bannermen={this.state.bannermen} />
         <Route
           path='/bannermen'
           render={() =>
-            <Bannermen remove={this.deleteUser}
+            <Bannermen
+              remove={this.deleteUser}
               bannermen={this.state.bannermen}
             />}
         />
         <Route
           path='/create'
           render={() => (
-            <Create 
-              addCharacter={this.addCharacter} 
+            <Create
+              addCharacter={this.addCharacter}
               bannermen={this.state.bannermen}
+            />
+          )}
+        />
+        <Route
+          path='/update/:id'
+          render={({ match }) => (
+            <Update
+              updateCharacter={this.updateCharacter}
+              bannermen={this.state.bannermen}
+              bannermanId={match.params.id}
             />
           )}
         />

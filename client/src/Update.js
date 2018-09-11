@@ -1,11 +1,27 @@
 import React, { Component } from 'react';
-import CreateUpdateForm from './CreateUpdateForm';
+import UpdateForm from './UpdateForm';
 import { Modal, Col, Row } from 'react-materialize';
+import axios from 'axios';
 
 export default class extends Component {
   state = {
     bannermanName: '',
+    house: '',
+    imageLink: '',
     lordId: ''
+  }
+
+  componentDidMount = () => {
+    console.log('mounting')
+    axios.get(`/api/bannermen/${this.props.bannermanId}`)
+      .then(response => response.data)
+      .then(bannerman => {
+        const { name, house, imageLink, lordId } = bannerman;
+        this.setState({ bannermanName: name, house, imageLink, lordId })
+      })
+      .catch(err => {
+        throw err;
+      })
   }
 
   handleSubmit = e => {
@@ -26,20 +42,18 @@ export default class extends Component {
     const { bannermanName, lordId } = this.state;
     return (
       <Row>
-        <Col s={4} />
-        <Col s={5}>
+        <Col s={10}>
           <Modal
             id='error-modal'
             header='No such GOT character'>
             Check your spelling?
           </Modal>
-          <CreateUpdateForm
-            handleSubmit={this.handleSubmit}
+          <UpdateForm
             handleChange={this.handleChange}
-            bannermanName={bannermanName}
-            lordId={lordId}
-            bannermen={this.props.bannermen}
+            handleSubmit={this.handleSubmit}
+            {...this.state}
           />
+
         </Col>
       </Row>
     )

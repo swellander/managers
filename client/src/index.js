@@ -2,11 +2,15 @@ import React from 'react';
 import { render } from 'react-dom';
 import Main from './Main';
 import { HashRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './store';
 
 const App = () => {
   return (
     <Router>
-      <Main />
+      <Provider store={store}>
+        <Main />
+      </Provider>
     </Router>
   )
 }

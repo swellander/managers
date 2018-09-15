@@ -10,6 +10,7 @@ export default ({ update, remove, bannermen }) => {
     if (lord) return lord;
     else return { name: 'none but the Seven' }
   }
+  console.log(bannermen)
 
   return (
     <Row>

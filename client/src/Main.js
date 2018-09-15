@@ -5,66 +5,47 @@ import Header from './Header';
 import Bannermen from './Bannermen';
 import Create from './Create';
 import Update from './Update';
-import store, { initBannerment } from './store';
+import store, { initBannermen, createBannerman } from './store';
+import { connect } from 'react-redux';
 
-export default class Main extends Component {
+class Main extends Component {
   state = {
-    bannermen: store.getState(),
     redirect: false
   }
-
   componentDidMount() {
-    axios.get('/api/bannermen')
-      .then(response => response.data)
-      .then(bannermen => this.setState({ bannermen }))
+    store.dispatch(initBannermen());
   }
-
   addCharacter = (name, lordId) => {
-    return axios.get(`https://api.got.show/api/characters/${name}`)
-      .then(response => response.data.data)
-      .then(character => {
-        axios.post(`/api/bannermen`, { ...character, lordId })
-          .then(response => response.data)
-          .then(bannerman => {
-            this.setState({
-              bannermen: [...this.state.bannermen, bannerman],
-              redirect: true
-            })
-
-          })
-      })
+    store.dispatch(createBannerman(name, lordId))
   }
-
   updateCharacter = (id, character) => {
     alert('updating')
   }
-
   deleteUser = (id) => {
     console.log('deleting bannerman of id: ', id);
     axios.delete(`/api/bannermen/${id}`)
       .then(() => {
-        const newBannermen = this.state.bannermen.filter(bannerman => bannerman.id !== id);
+        const newBannermen = this.props.bannermen.filter(bannerman => bannerman.id !== id);
         this.setState({ bannermen: newBannermen })
       })
   }
-
-
-
+  static defaultProps = {
+    bannermen: []
+  }
   render() {
     if (this.state.redirect) {
       this.setState({ redirect: false })
       return <Redirect push to='/bannermen' />;
     }
-
     return (
       <div>
-        <Header bannermen={this.state.bannermen} />
+        <Header bannermen={this.props.bannermen} />
         <Route
           path='/bannermen'
           render={() =>
             <Bannermen
               remove={this.deleteUser}
-              bannermen={this.state.bannermen}
+              bannermen={this.props.bannermen}
             />}
         />
         <Route
@@ -72,7 +53,7 @@ export default class Main extends Component {
           render={() => (
             <Create
               addCharacter={this.addCharacter}
-              bannermen={this.state.bannermen}
+              bannermen={this.props.bannermen}
             />
           )}
         />
@@ -81,7 +62,7 @@ export default class Main extends Component {
           render={({ match }) => (
             <Update
               updateCharacter={this.updateCharacter}
-              bannermen={this.state.bannermen}
+              bannermen={this.props.bannermen}
               bannermanId={match.params.id}
             />
           )}
@@ -90,3 +71,9 @@ export default class Main extends Component {
     )
   }
 }
+
+const mapStateToProps = state => (
+  { ...state }
+)
+
+export default connect(mapStateToProps)(Main);

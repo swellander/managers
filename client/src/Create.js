@@ -1,21 +1,30 @@
 import React, { Component } from 'react';
 import CreateUpdateForm from './CreateUpdateForm';
 import { Modal, Col, Row } from 'react-materialize';
+import { connect } from 'react-redux';
 
-export default class extends Component {
+class Create extends Component {
+  //state for form changes only
   state = {
     bannermanName: '',
     lordId: ''
+  }
+
+  static defaultProps = {
+    gotErr: false
   }
 
   handleSubmit = e => {
     e.preventDefault();
     const { bannermanName, lordId } = this.state;
     this.props.addCharacter(bannermanName, lordId)
-      .catch(err => {
-        console.log(err);
-        $('#error-modal').modal('open')
-      });
+  }
+
+  //GOT API error handling
+  componentDidUpdate = (prevProps) => {
+    console.log('prev', prevProps.gotErr)
+    console.log('curr', this.props.gotErr)
+    if (prevProps.gotErr !== this.props.gotErr) $('#error-modal').modal('open')
   }
 
   handleChange = e => {
@@ -45,3 +54,11 @@ export default class extends Component {
     )
   }
 }
+
+const mapStateToProps = state => (
+  {
+    gotErr: state.gotErr
+  }
+)
+
+export default connect(mapStateToProps)(Create);
